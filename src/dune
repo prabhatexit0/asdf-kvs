@@ -1,5 +1,6 @@
 (library
  (name asdf_kvs)
+ (public_name asdf-kvs)
  (modules lexer parser interpreter)
  (wrapped false))
 
