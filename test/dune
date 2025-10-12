@@ -1,0 +1,11 @@
+(test
+ (name test_lexer)
+ (libraries asdf_kvs))
+
+(test
+ (name test_parser)
+ (libraries asdf_kvs))
+
+(test
+ (name test_interpreter)
+ (libraries asdf_kvs))
