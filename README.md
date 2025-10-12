@@ -49,6 +49,6 @@ values: string literal
 
 # Something Nested?
 ```
-set (get "asdf") "value";
+set get "asdf" "value"
 
 ```
