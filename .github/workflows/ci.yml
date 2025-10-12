@@ -29,6 +29,9 @@ jobs:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
           dune-cache: false
 
+      - name: Install Dune
+        run: opam install dune
+
       - name: Build project
         run: opam exec -- dune build
 
