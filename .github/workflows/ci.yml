@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main, master]
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   build-and-test:
     runs-on: ${{ matrix.os }}
@@ -23,7 +27,7 @@ jobs:
         uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
-          dune-cache: true
+          dune-cache: false
 
       - name: Build project
         run: opam exec -- dune build
