@@ -2,6 +2,14 @@
 
 An in-memory key-value store with a custom language, lexer, parser, and interpreter written in OCaml.
 
+## Demo
+
+
+
+https://github.com/user-attachments/assets/ba9753de-8417-4354-a77f-19f94a415e00
+
+
+
 ## Quick Start
 
 Build the project:
