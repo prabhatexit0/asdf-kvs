@@ -15,38 +15,35 @@ let test_interpreter () =
 
   run_test "Create a store" "create \"users\"";
 
-  run_test "Create and select a store"
-    "create \"products\"; select \"products\"";
+  run_test "Create and select a store" "create \"products\"; use \"products\"";
 
   run_test "Create, select, and set a key-value"
-    "create \"store1\"; select \"store1\"; set \"key1\" \"value1\"";
+    "create \"store1\"; use \"store1\"; set \"key1\" \"value1\"";
 
   run_test "Create, select, set, and get"
-    "create \"mystore\"; select \"mystore\"; set \"name\" \"Alice\"; get \
-     \"name\"";
+    "create \"mystore\"; use \"mystore\"; set \"name\" \"Alice\"; get \"name\"";
 
   run_test "Multiple key-value pairs"
-    "create \"db\"; select \"db\"; set \"a\" \"1\"; set \"b\" \"2\"; set \"c\" \
+    "create \"db\"; use \"db\"; set \"a\" \"1\"; set \"b\" \"2\"; set \"c\" \
      \"3\"";
 
   run_test "Nested get in set"
-    "create \"s\"; select \"s\"; set \"x\" \"hello\"; set \"y\" get \"x\"; get \
+    "create \"s\"; use \"s\"; set \"x\" \"hello\"; set \"y\" get \"x\"; get \
      \"y\"";
 
   run_test "Dump empty store" "create \"empty\"; dump \"empty\"";
 
   run_test "Dump store with data"
-    "create \"data\"; select \"data\"; set \"foo\" \"bar\"; set \"baz\" \
-     \"qux\"; dump \"data\"";
+    "create \"data\"; use \"data\"; set \"foo\" \"bar\"; set \"baz\" \"qux\"; \
+     dump \"data\"";
 
   run_test "Drop a store" "create \"temp\"; drop \"temp\"";
 
-  run_test "Unselect a store"
-    "create \"test\"; select \"test\"; unselect \"test\"";
+  run_test "Unselect a store" "create \"test\"; use \"test\"; unselect \"test\"";
 
   run_test "Multiple stores"
-    "create \"store1\"; create \"store2\"; select \"store1\"; set \"k1\" \
-     \"v1\"; select \"store2\"; set \"k2\" \"v2\"";
+    "create \"store1\"; create \"store2\"; use \"store1\"; set \"k1\" \"v1\"; \
+     use \"store2\"; set \"k2\" \"v2\"";
 
   run_test "Save operation (stub)" "create \"persist\"; save \"backup.db\"";
 
@@ -61,9 +58,9 @@ let test_interpreter () =
     "create \"s\"; get \"key\"";
 
   run_test "Get non-existent key (should fail)"
-    "create \"s\"; select \"s\"; get \"missing\"";
+    "create \"s\"; use \"s\"; get \"missing\"";
 
-  run_test "Select non-existent store (should fail)" "select \"nonexistent\"";
+  run_test "Select non-existent store (should fail)" "use \"nonexistent\"";
 
   run_test "Drop non-existent store (should fail)" "drop \"nonexistent\"";
 

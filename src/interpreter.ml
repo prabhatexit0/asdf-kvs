@@ -57,7 +57,7 @@ let rec eval state expr =
       let (String key) = eval state key_expr in
       let value = eval state value_expr in
       match state.selected with
-      | None -> failwith "No store selected. Use SELECT first."
+      | None -> failwith "No store selected. Use USE first."
       | Some store_name ->
           let store = Hashtbl.find state.stores store_name in
           Hashtbl.replace store key value;
@@ -67,7 +67,7 @@ let rec eval state expr =
   | Parser.Get key_expr -> (
       let (String key) = eval state key_expr in
       match state.selected with
-      | None -> failwith "No store selected. Use SELECT first."
+      | None -> failwith "No store selected. Use USE first."
       | Some store_name -> (
           let store = Hashtbl.find state.stores store_name in
           match Hashtbl.find_opt store key with

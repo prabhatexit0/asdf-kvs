@@ -37,8 +37,8 @@ let print_welcome () =
     (Colors.dim ^ "  " ^ Colors.bright_magenta ^ "create" ^ Colors.reset
    ^ Colors.dim ^ " <name>       - Create a new store" ^ Colors.reset);
   print_endline
-    (Colors.dim ^ "  " ^ Colors.bright_magenta ^ "select" ^ Colors.reset
-   ^ Colors.dim ^ " <name>       - Select a store" ^ Colors.reset);
+    (Colors.dim ^ "  " ^ Colors.bright_magenta ^ "use" ^ Colors.reset
+   ^ Colors.dim ^ " <name>          - Select a store" ^ Colors.reset);
   print_endline
     (Colors.dim ^ "  " ^ Colors.bright_magenta ^ "unselect" ^ Colors.reset
    ^ Colors.dim ^ " <name>     - Unselect a store" ^ Colors.reset);
@@ -76,7 +76,7 @@ let print_welcome () =
   print_endline
     (Colors.dim ^ "Multiple commands: " ^ Colors.bright_magenta ^ "create"
    ^ Colors.reset ^ " " ^ Colors.bright_cyan ^ "\"s\"" ^ Colors.reset ^ "; "
-   ^ Colors.bright_magenta ^ "select" ^ Colors.reset ^ " " ^ Colors.bright_cyan
+   ^ Colors.bright_magenta ^ "use" ^ Colors.reset ^ " " ^ Colors.bright_cyan
    ^ "\"s\"" ^ Colors.reset ^ Colors.dim ^ Colors.reset);
   print_endline ""
 

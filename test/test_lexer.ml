@@ -11,7 +11,7 @@ let test_lexer () =
 
   (* Define your test cases here *)
   test_case "create asdf" [ Lexer.Tok_Create; Lexer.Tok_Name "asdf" ];
-  test_case "select item" [ Lexer.Tok_Select; Lexer.Tok_Name "item" ];
+  test_case "use item" [ Lexer.Tok_Use; Lexer.Tok_Name "item" ];
   test_case "set key value"
     [ Lexer.Tok_Set; Lexer.Tok_Name "key"; Lexer.Tok_Name "value" ];
   test_case "get key" [ Lexer.Tok_Get; Lexer.Tok_Name "key" ];

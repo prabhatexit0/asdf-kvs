@@ -17,7 +17,7 @@ let test_parser () =
   test_case "create \"mystore\""
     [ Parser.Create (Parser.StringLiteral "mystore") ];
 
-  test_case "select mystore" [ Parser.Select (Parser.Name "mystore") ];
+  test_case "use mystore" [ Parser.Select (Parser.Name "mystore") ];
 
   test_case "set \"key\" \"value\""
     [ Parser.Set (Parser.StringLiteral "key", Parser.StringLiteral "value") ];
@@ -36,7 +36,7 @@ let test_parser () =
 
   test_case "load \"file.db\"" [ Parser.Load (Parser.StringLiteral "file.db") ];
 
-  test_case "create \"store1\"; select \"store1\""
+  test_case "create \"store1\"; use \"store1\""
     [
       Parser.Create (Parser.StringLiteral "store1");
       Parser.Select (Parser.StringLiteral "store1");

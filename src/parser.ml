@@ -52,7 +52,7 @@ let rec parse_expr parser =
       advance parser;
       let arg = parse_expr parser in
       Create arg
-  | Lexer.Tok_Select ->
+  | Lexer.Tok_Use ->
       advance parser;
       let arg = parse_expr parser in
       Select arg
