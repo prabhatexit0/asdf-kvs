@@ -2,8 +2,9 @@ let main () =
   print_endline "=== asdf-kvs: Key-Value Store ===\n";
 
   let program_text =
-    "create \"users\"; select \"users\"; set \"alice\" \"admin\"; set \"bob\" \
-     \"user\"; get \"alice\"; dump \"users\""
+    "create \"users\"; use \"users\"; set \"alice\" string \"admin\"; set \
+     \"bob\" string \"user\"; set \"age\" i32 \"30\"; get \"alice\"; dump \
+     \"users\""
   in
 
   print_endline "Running demo program:\n";
