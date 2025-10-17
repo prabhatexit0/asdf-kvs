@@ -10,8 +10,7 @@ let create_state () = { stores = Hashtbl.create 10; selected = None }
 let value_to_string = function String s -> s
 let string_to_value s = String s
 
-let rec eval state expr =
-  match expr with
+let rec eval state = function
   | Parser.StringLiteral s -> String s
   | Parser.Name n -> String n
   | Parser.Create name_expr ->
