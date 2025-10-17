@@ -19,15 +19,20 @@ let test_parser () =
 
   test_case "use mystore" [ Parser.Select (Parser.Name "mystore") ];
 
-  test_case "set \"key\" \"value\""
-    [ Parser.Set (Parser.StringLiteral "key", Parser.StringLiteral "value") ];
+  test_case "set \"key\" string \"value\""
+    [
+      Parser.Set
+        (Parser.StringLiteral "key", Parser.String, Parser.StringLiteral "value");
+    ];
 
   test_case "get \"key\"" [ Parser.Get (Parser.StringLiteral "key") ];
 
-  test_case "set get \"x\" \"y\""
+  test_case "set get \"x\" string \"y\""
     [
       Parser.Set
-        (Parser.Get (Parser.StringLiteral "x"), Parser.StringLiteral "y");
+        ( Parser.Get (Parser.StringLiteral "x"),
+          Parser.String,
+          Parser.StringLiteral "y" );
     ];
 
   test_case "dump \"mystore\"" [ Parser.Dump (Parser.StringLiteral "mystore") ];
@@ -42,10 +47,11 @@ let test_parser () =
       Parser.Select (Parser.StringLiteral "store1");
     ];
 
-  test_case "set get get \"x\" \"final\""
+  test_case "set get get \"x\" string \"final\""
     [
       Parser.Set
         ( Parser.Get (Parser.Get (Parser.StringLiteral "x")),
+          Parser.String,
           Parser.StringLiteral "final" );
     ];
 

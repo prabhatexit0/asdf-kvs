@@ -8,6 +8,11 @@ type token =
   | Tok_Save
   | Tok_Load
   | Tok_Dump
+  | Tok_I32
+  | Tok_I64
+  | Tok_F32
+  | Tok_F64
+  | Tok_String
   | Tok_LParen
   | Tok_RParen
   | Tok_Semi
@@ -25,6 +30,11 @@ let token_to_string = function
   | Tok_Save -> "save"
   | Tok_Load -> "load"
   | Tok_Dump -> "dump"
+  | Tok_I32 -> "i32"
+  | Tok_I64 -> "i64"
+  | Tok_F32 -> "f32"
+  | Tok_F64 -> "f64"
+  | Tok_String -> "string"
   | Tok_LParen -> "("
   | Tok_RParen -> ")"
   | Tok_Semi -> ";"
@@ -87,6 +97,11 @@ let handle_identifier lexer =
   | "save" -> Tok_Save
   | "load" -> Tok_Load
   | "dump" -> Tok_Dump
+  | "i32" -> Tok_I32
+  | "i64" -> Tok_I64
+  | "f32" -> Tok_F32
+  | "f64" -> Tok_F64
+  | "string" -> Tok_String
   | name -> Tok_Name name
 
 let next_token lexer =

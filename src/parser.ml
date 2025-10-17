@@ -1,3 +1,5 @@
+type data_type = I32 | I64 | F32 | F64 | String
+
 type expr =
   | StringLiteral of string
   | Name of string
@@ -5,13 +7,20 @@ type expr =
   | Select of expr
   | Unselect of expr
   | Drop of expr
-  | Set of expr * expr
+  | Set of expr * data_type * expr
   | Get of expr
   | Save of expr
   | Load of expr
   | Dump of expr
 
 type program = expr list
+
+let data_type_to_string = function
+  | I32 -> "i32"
+  | I64 -> "i64"
+  | F32 -> "f32"
+  | F64 -> "f64"
+  | String -> "string"
 
 let rec expr_to_string = function
   | StringLiteral s -> Printf.sprintf "\"%s\"" s
@@ -20,8 +29,10 @@ let rec expr_to_string = function
   | Select e -> Printf.sprintf "(SELECT %s)" (expr_to_string e)
   | Unselect e -> Printf.sprintf "(UNSELECT %s)" (expr_to_string e)
   | Drop e -> Printf.sprintf "(DROP %s)" (expr_to_string e)
-  | Set (key, value) ->
-      Printf.sprintf "(SET %s %s)" (expr_to_string key) (expr_to_string value)
+  | Set (key, dtype, value) ->
+      Printf.sprintf "(SET %s %s %s)" (expr_to_string key)
+        (data_type_to_string dtype)
+        (expr_to_string value)
   | Get e -> Printf.sprintf "(GET %s)" (expr_to_string e)
   | Save e -> Printf.sprintf "(SAVE %s)" (expr_to_string e)
   | Load e -> Printf.sprintf "(LOAD %s)" (expr_to_string e)
@@ -46,6 +57,28 @@ let consume parser =
   advance parser;
   tok
 
+let parse_data_type parser =
+  match peek parser with
+  | Lexer.Tok_I32 ->
+      advance parser;
+      I32
+  | Lexer.Tok_I64 ->
+      advance parser;
+      I64
+  | Lexer.Tok_F32 ->
+      advance parser;
+      F32
+  | Lexer.Tok_F64 ->
+      advance parser;
+      F64
+  | Lexer.Tok_String ->
+      advance parser;
+      String
+  | tok ->
+      failwith
+        (Printf.sprintf "Expected data type, got: %s"
+           (Lexer.token_to_string tok))
+
 let rec parse_expr parser =
   match peek parser with
   | Lexer.Tok_Create ->
@@ -67,8 +100,9 @@ let rec parse_expr parser =
   | Lexer.Tok_Set ->
       advance parser;
       let key = parse_expr parser in
+      let dtype = parse_data_type parser in
       let value = parse_expr parser in
-      Set (key, value)
+      Set (key, dtype, value)
   | Lexer.Tok_Get ->
       advance parser;
       let arg = parse_expr parser in
@@ -99,6 +133,9 @@ let rec parse_expr parser =
       | _ -> failwith "Expected closing parenthesis");
       e
   | Lexer.Tok_Semi | Lexer.Tok_End -> failwith "Unexpected token in expression"
+  | Lexer.Tok_I32 | Lexer.Tok_I64 | Lexer.Tok_F32 | Lexer.Tok_F64
+  | Lexer.Tok_String ->
+      failwith "Data type tokens cannot be used as expressions"
   | tok ->
       failwith
         (Printf.sprintf "Unexpected token: %s" (Lexer.token_to_string tok))

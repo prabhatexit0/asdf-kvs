@@ -18,32 +18,33 @@ let test_interpreter () =
   run_test "Create and select a store" "create \"products\"; use \"products\"";
 
   run_test "Create, select, and set a key-value"
-    "create \"store1\"; use \"store1\"; set \"key1\" \"value1\"";
+    "create \"store1\"; use \"store1\"; set \"key1\" string \"value1\"";
 
   run_test "Create, select, set, and get"
-    "create \"mystore\"; use \"mystore\"; set \"name\" \"Alice\"; get \"name\"";
+    "create \"mystore\"; use \"mystore\"; set \"name\" string \"Alice\"; get \
+     \"name\"";
 
   run_test "Multiple key-value pairs"
-    "create \"db\"; use \"db\"; set \"a\" \"1\"; set \"b\" \"2\"; set \"c\" \
-     \"3\"";
+    "create \"db\"; use \"db\"; set \"a\" string \"1\"; set \"b\" string \
+     \"2\"; set \"c\" string \"3\"";
 
   run_test "Nested get in set"
-    "create \"s\"; use \"s\"; set \"x\" \"hello\"; set \"y\" get \"x\"; get \
-     \"y\"";
+    "create \"s\"; use \"s\"; set \"x\" string \"hello\"; set \"y\" string get \
+     \"x\"; get \"y\"";
 
   run_test "Dump empty store" "create \"empty\"; dump \"empty\"";
 
   run_test "Dump store with data"
-    "create \"data\"; use \"data\"; set \"foo\" \"bar\"; set \"baz\" \"qux\"; \
-     dump \"data\"";
+    "create \"data\"; use \"data\"; set \"foo\" string \"bar\"; set \"baz\" \
+     string \"qux\"; dump \"data\"";
 
   run_test "Drop a store" "create \"temp\"; drop \"temp\"";
 
   run_test "Unselect a store" "create \"test\"; use \"test\"; unselect \"test\"";
 
   run_test "Multiple stores"
-    "create \"store1\"; create \"store2\"; use \"store1\"; set \"k1\" \"v1\"; \
-     use \"store2\"; set \"k2\" \"v2\"";
+    "create \"store1\"; create \"store2\"; use \"store1\"; set \"k1\" string \
+     \"v1\"; use \"store2\"; set \"k2\" string \"v2\"";
 
   run_test "Save operation (stub)" "create \"persist\"; save \"backup.db\"";
 
@@ -52,7 +53,7 @@ let test_interpreter () =
   print_endline "\n=== Error Handling Tests ===\n";
 
   run_test "Set without selecting store (should fail)"
-    "create \"s\"; set \"key\" \"value\"";
+    "create \"s\"; set \"key\" string \"value\"";
 
   run_test "Get without selecting store (should fail)"
     "create \"s\"; get \"key\"";

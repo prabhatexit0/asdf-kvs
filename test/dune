@@ -9,3 +9,7 @@
 (test
  (name test_interpreter)
  (libraries asdf_kvs))
+
+(test
+ (name test_storage)
+ (libraries asdf_kvs))
