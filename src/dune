@@ -13,3 +13,13 @@
  (name repl)
  (modules repl)
  (libraries asdf_kvs))
+
+(executable
+ (name server)
+ (modules server)
+ (libraries asdf_kvs unix threads.posix))
+
+(executable
+ (name client)
+ (modules client)
+ (libraries unix))

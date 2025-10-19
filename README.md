@@ -26,10 +26,32 @@ Run the demo program:
 dune exec main
 ```
 
+Start the TCP server:
+
+```bash
+./start_server.sh
+# or directly
+dune exec server
+```
+
+Connect a TCP client:
+
+```bash
+./start_client.sh
+# or directly
+dune exec client
+```
+
 Run tests:
 
 ```bash
 dune runtest
+```
+
+Test TCP server/client:
+
+```bash
+./test_tcp.sh
 ```
 
 ## Supported Operations
@@ -58,12 +80,12 @@ load "filename";                  # Load store from file (stub - not yet impleme
 
 1. **Type System** - Strongly typed values with support for integers, floats, and strings
 2. **Custom Storage Engine** - Linked-list based storage implementation
-3. **Multiple stores** - Create and manage multiple independent key-value stores
-4. **Store selection** - Select a store to operate on using `use` command
-5. **Nested expressions** - Commands can be nested, e.g., `set get "x" string "y"`
-6. **Multiple statements** - Separate commands with semicolons
-7. **Interactive REPL** - Beautiful colored REPL with helpful prompts
-8. **Demo mode** - Run a demo program to see the store in action
+3. **TCP Server/Client** - Multi-client TCP server with networked access
+4. **Multiple stores** - Create and manage multiple independent key-value stores
+5. **Store selection** - Select a store to operate on using `use` command
+6. **Nested expressions** - Commands can be nested, e.g., `set get "x" string "y"`
+7. **Multiple statements** - Separate commands with semicolons
+8. **Interactive REPL** - Beautiful colored REPL with helpful prompts
 
 ## Architecture
 
@@ -73,8 +95,10 @@ The project consists of several layers:
 2. **Parser** (`src/parser.ml`) - Parses tokens into an abstract syntax tree (AST)
 3. **Interpreter** (`src/interpreter.ml`) - Evaluates the AST and executes commands
 4. **Storage** (`src/storage.ml`) - Custom linked-list storage engine with typed data support
-5. **REPL** (`src/repl.ml`) - Interactive command-line interface
-6. **Main** (`src/main.ml`) - Demo program
+5. **Server** (`src/server.ml`) - Multi-threaded TCP server for networked access
+6. **Client** (`src/client.ml`) - TCP client for connecting to remote server
+7. **REPL** (`src/repl.ml`) - Interactive command-line interface
+8. **Main** (`src/main.ml`) - Demo program
 
 ## Grammar Specification
 
@@ -106,6 +130,54 @@ The project consists of several layers:
 **Statements:**
 
 - Multiple expressions separated by `;`
+
+## TCP Server/Client
+
+asdf-kvs includes a multi-threaded TCP server that allows multiple clients to connect and share the same key-value store.
+
+### Starting the Server
+
+```bash
+./start_server.sh
+# Server starts on 127.0.0.1:9090
+```
+
+The server:
+
+- Accepts multiple concurrent client connections
+- Maintains shared state across all clients
+- Uses threads to handle each client independently
+- Supports all commands available in the REPL
+
+### Connecting Clients
+
+```bash
+# Terminal 1
+./start_client.sh
+
+# Terminal 2
+./start_client.sh
+
+# Terminal 3 (custom host/port)
+./start_client.sh 127.0.0.1 9090
+```
+
+### Multi-Client Example
+
+```
+# Client 1
+create "shared_db"
+use "shared_db"
+set "key1" string "value1"
+
+# Client 2 (connects to same server)
+use "shared_db"
+get "key1"          # Returns "value1"
+set "key2" i32 "42"
+
+# Client 1
+dump "shared_db"    # Shows both key1 and key2
+```
 
 ## Examples
 
@@ -188,9 +260,14 @@ val dump : t -> unit
 - ✅ Interpreter for command execution
 - ✅ Interactive REPL with colors and nice UI
 - ✅ Nested expressions
+- ✅ Multi-threaded TCP server
+- ✅ TCP client for remote connections
+- ✅ Shared state across multiple clients
 - ⏳ File persistence (save/load commands are stubs)
-- ⏳ TCP/network interface
-- ⏳ Concurrency control
+- ⏳ Write Ahead Log
+- ⏳ Concurrency control (currently no locking)
+- ⏳ Benchmarking
+- ⏳ Authentication and security
 - ⏳ B-tree or other advanced storage structures
 - ⏳ Indexing and query optimization
 - ⏳ So many things...
