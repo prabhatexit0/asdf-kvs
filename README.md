@@ -4,7 +4,7 @@ A typed in-memory key-value store with a custom language, lexer, parser, and int
 
 ## Demo
 
-https://github.com/user-attachments/assets/ba9753de-8417-4354-a77f-19f94a415e00
+https://github.com/user-attachments/assets/2071cf01-d062-4313-995e-be1448ebbaee
 
 ## Quick Start
 
