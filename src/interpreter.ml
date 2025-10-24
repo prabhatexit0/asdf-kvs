@@ -29,7 +29,7 @@ let rec eval state = function
         Hashtbl.add state.stores name (Storage.create ());
         Printf.printf "Created store: %s\n" name;
         String name)
-  | Parser.Select name_expr ->
+  | Parser.Use name_expr ->
       let (String name) = eval state name_expr in
       if not (Hashtbl.mem state.stores name) then
         failwith (Printf.sprintf "Store '%s' does not exist" name)
@@ -37,18 +37,6 @@ let rec eval state = function
         state.selected <- Some name;
         Printf.printf "Selected store: %s\n" name;
         String name)
-  | Parser.Unselect name_expr -> (
-      let (String name) = eval state name_expr in
-      match state.selected with
-      | Some current when current = name ->
-          state.selected <- None;
-          Printf.printf "Unselected store: %s\n" name;
-          String name
-      | Some current ->
-          failwith
-            (Printf.sprintf "Cannot unselect '%s': currently selected is '%s'"
-               name current)
-      | None -> failwith "No store is currently selected")
   | Parser.Drop name_expr ->
       let (String name) = eval state name_expr in
       if not (Hashtbl.mem state.stores name) then

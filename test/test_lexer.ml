@@ -1,3 +1,5 @@
+open Asdf_kvs
+
 let test_lexer () =
   let test_case input expected_tokens =
     let lexer = Lexer.new_lexer input in
@@ -19,7 +21,6 @@ let test_lexer () =
   test_case "load \"file.txt\""
     [ Lexer.Tok_Load; Lexer.Tok_StringLiteral "file.txt" ];
   test_case "drop item" [ Lexer.Tok_Drop; Lexer.Tok_Name "item" ];
-  test_case "unselect item" [ Lexer.Tok_Unselect; Lexer.Tok_Name "item" ];
   test_case "()" [ Lexer.Tok_LParen; Lexer.Tok_RParen ];
   test_case ";" [ Lexer.Tok_Semi ];
 

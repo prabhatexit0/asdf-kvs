@@ -1,7 +1,6 @@
 type token =
   | Tok_Create
   | Tok_Use
-  | Tok_Unselect
   | Tok_Drop
   | Tok_Set
   | Tok_Get
@@ -23,7 +22,6 @@ type token =
 let token_to_string = function
   | Tok_Create -> "create"
   | Tok_Use -> "use"
-  | Tok_Unselect -> "unselect"
   | Tok_Drop -> "drop"
   | Tok_Set -> "set"
   | Tok_Get -> "get"
@@ -90,7 +88,6 @@ let handle_identifier lexer =
   match ident with
   | "create" -> Tok_Create
   | "use" -> Tok_Use
-  | "unselect" -> Tok_Unselect
   | "drop" -> Tok_Drop
   | "set" -> Tok_Set
   | "get" -> Tok_Get

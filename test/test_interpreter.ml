@@ -1,3 +1,5 @@
+open Asdf_kvs
+
 let run_test description program_text =
   Printf.printf "\n=== Test: %s ===\n" description;
   Printf.printf "Input: %s\n\n" program_text;

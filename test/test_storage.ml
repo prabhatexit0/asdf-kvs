@@ -1,4 +1,4 @@
-open Storage
+open Asdf_kvs.Storage
 
 let test_multiple_stores () =
   print_endline "=== Testing Multiple Independent Stores ===\n";

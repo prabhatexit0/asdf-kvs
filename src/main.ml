@@ -1,3 +1,5 @@
+open Asdf_kvs
+
 let main () =
   print_endline "=== asdf-kvs: Key-Value Store ===\n";
 

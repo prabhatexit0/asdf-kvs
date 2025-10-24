@@ -4,8 +4,7 @@ type expr =
   | StringLiteral of string
   | Name of string
   | Create of expr
-  | Select of expr
-  | Unselect of expr
+  | Use of expr
   | Drop of expr
   | Set of expr * data_type * expr
   | Get of expr
@@ -26,8 +25,7 @@ let rec expr_to_string = function
   | StringLiteral s -> Printf.sprintf "\"%s\"" s
   | Name n -> n
   | Create e -> Printf.sprintf "(CREATE %s)" (expr_to_string e)
-  | Select e -> Printf.sprintf "(SELECT %s)" (expr_to_string e)
-  | Unselect e -> Printf.sprintf "(UNSELECT %s)" (expr_to_string e)
+  | Use e -> Printf.sprintf "(Use %s)" (expr_to_string e)
   | Drop e -> Printf.sprintf "(DROP %s)" (expr_to_string e)
   | Set (key, dtype, value) ->
       Printf.sprintf "(SET %s %s %s)" (expr_to_string key)
@@ -88,11 +86,7 @@ let rec parse_expr parser =
   | Lexer.Tok_Use ->
       advance parser;
       let arg = parse_expr parser in
-      Select arg
-  | Lexer.Tok_Unselect ->
-      advance parser;
-      let arg = parse_expr parser in
-      Unselect arg
+      Use arg
   | Lexer.Tok_Drop ->
       advance parser;
       let arg = parse_expr parser in

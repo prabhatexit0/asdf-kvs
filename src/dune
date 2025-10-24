@@ -2,7 +2,7 @@
  (name asdf_kvs)
  (public_name asdf-kvs)
  (modules lexer parser interpreter storage)
- (wrapped false))
+ (wrapped true))
 
 (executable
  (name main)

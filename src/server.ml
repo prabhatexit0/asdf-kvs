@@ -1,4 +1,5 @@
 open Unix
+open Asdf_kvs
 
 type server_state = { state : Interpreter.state; mutable clients : int }
 

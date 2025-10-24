@@ -1,3 +1,5 @@
+open Asdf_kvs
+
 module Colors = struct
   let reset = "\027[0m"
   let bold = "\027[1m"

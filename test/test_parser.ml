@@ -1,3 +1,5 @@
+open Asdf_kvs
+
 let test_parser () =
   let test_case input expected_ast =
     Printf.printf "\n--- Testing: %s ---\n" input;
@@ -17,7 +19,7 @@ let test_parser () =
   test_case "create \"mystore\""
     [ Parser.Create (Parser.StringLiteral "mystore") ];
 
-  test_case "use mystore" [ Parser.Select (Parser.Name "mystore") ];
+  test_case "use mystore" [ Parser.Use (Parser.Name "mystore") ];
 
   test_case "set \"key\" string \"value\""
     [
@@ -44,7 +46,7 @@ let test_parser () =
   test_case "create \"store1\"; use \"store1\""
     [
       Parser.Create (Parser.StringLiteral "store1");
-      Parser.Select (Parser.StringLiteral "store1");
+      Parser.Use (Parser.StringLiteral "store1");
     ];
 
   test_case "set get get \"x\" string \"final\""
